@@ -1,0 +1,7 @@
+<mvc:View
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    controllerName="vendor.onboarding.controller.App"
+    displayBlock="true">
+    <App id="appContainer" />
+</mvc:View>

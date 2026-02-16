@@ -1,0 +1,52 @@
+{
+  "name": "vendor-onboarding-backend",
+  "version": "1.0.0",
+  "description": "Vendor Onboarding Backend - SAP CAP API Server",
+  "main": "index.js",
+  "scripts": {
+    "start": "cds-serve",
+    "watch": "cds watch",
+    "build": "cds build",
+    "deploy": "cds deploy"
+  },
+  "keywords": [
+    "CAP",
+    "SAP",
+    "vendor",
+    "onboarding",
+    "backend"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@sap/cds": "^7",
+    "@cap-js/sqlite": "^1",
+    "express": "^4",
+    "axios": "^1.6.2",
+    "jsonwebtoken": "^9.0.2",
+    "querystring": "^0.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^9"
+  },
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "url": "db.sqlite"
+        }
+      },
+      "auth": {
+        "kind": "dummy"
+      }
+    },
+    "server": {
+      "port": 4004,
+      "cors": {
+        "origin": "*",
+        "credentials": true
+      }
+    }
+  }
+}

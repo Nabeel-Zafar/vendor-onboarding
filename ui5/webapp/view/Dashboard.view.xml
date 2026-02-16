@@ -1,0 +1,84 @@
+<mvc:View
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    controllerName="vendor.onboarding.controller.Dashboard">
+    <Page id="dashboardPage" showHeader="true">
+        <customHeader>
+            <Bar class="dashboardHeader">
+                <contentLeft>
+                    <Image src="images/IXOM+Transparent.webp" height="32px" class="sapUiTinyMarginBegin dashboardLogo" />
+                </contentLeft>
+                <contentMiddle>
+                    <Title text="{i18n>dashboardTitle}" />
+                </contentMiddle>
+                <contentRight>
+                    <Button icon="sap-icon://add" text="{i18n>addVendor}" type="Emphasized" press="onAddVendor" />
+                    <Button icon="sap-icon://group" text="{i18n>usersTitle}" press="onNavToUsers" type="Transparent" />
+                    <Button icon="sap-icon://log" text="Logout" type="Transparent" press="onLogout" />
+                </contentRight>
+            </Bar>
+        </customHeader>
+        <content>
+            <IconTabBar id="iconTabBar" select="onTabSelect" class="sapUiResponsiveContentPadding">
+                <items>
+                    <IconTabFilter text="All" count="{counts>/all}" key="All" icon="sap-icon://list" />
+                    <IconTabFilter text="Pending" count="{counts>/pending}" key="Pending" icon="sap-icon://pending" iconColor="Critical" />
+                    <IconTabFilter text="Approved" count="{counts>/approved}" key="Approved" icon="sap-icon://accept" iconColor="Positive" />
+                    <IconTabFilter text="Rejected" count="{counts>/rejected}" key="Rejected" icon="sap-icon://decline" iconColor="Negative" />
+                </items>
+                <content>
+                    <Table id="vendorTable"
+                        items="{vendors>/Vendors}"
+                        growing="true"
+                        growingThreshold="20"
+                        mode="None"
+                        sticky="ColumnHeaders,HeaderToolbar"
+                        alternateRowColors="true"
+                        noDataText="{i18n>noVendors}">
+                        <headerToolbar>
+                            <OverflowToolbar>
+                                <Title text="{i18n>vendorDetails}" />
+                                <ToolbarSpacer />
+                                <SearchField width="300px" placeholder="{i18n>searchPlaceholder}" liveChange="onSearch" />
+                            </OverflowToolbar>
+                        </headerToolbar>
+                        <columns>
+                            <Column width="25%">
+                                <Text text="{i18n>companyName}" />
+                            </Column>
+                            <Column width="20%">
+                                <Text text="{i18n>contactPersonName}" />
+                            </Column>
+                            <Column width="22%" minScreenWidth="Tablet">
+                                <Text text="{i18n>contactPersonEmail}" />
+                            </Column>
+                            <Column width="15%" minScreenWidth="Tablet">
+                                <Text text="{i18n>contactPersonNumber}" />
+                            </Column>
+                            <Column width="18%" hAlign="Center">
+                                <Text text="Status" />
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem type="Navigation" press="onVendorPress">
+                                <cells>
+                                    <ObjectIdentifier
+                                        title="{vendors>company_name}"
+                                        text="{vendors>company_address}" />
+                                    <Text text="{vendors>contact_person_name}" />
+                                    <Text text="{vendors>contact_person_email}" />
+                                    <Text text="{vendors>contact_person_number}" />
+                                    <ObjectStatus
+                                        text="{vendors>_displayStatus}"
+                                        state="{= ${vendors>_displayStatus} === 'Approved' ? 'Success' : ${vendors>_displayStatus} === 'Rejected' ? 'Error' : 'Warning'}"
+                                        icon="{= ${vendors>_displayStatus} === 'Approved' ? 'sap-icon://accept' : ${vendors>_displayStatus} === 'Rejected' ? 'sap-icon://decline' : 'sap-icon://pending'}" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </content>
+            </IconTabBar>
+        </content>
+    </Page>
+</mvc:View>

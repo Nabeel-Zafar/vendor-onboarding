@@ -1,0 +1,11 @@
+---
+applications:
+  - name: vendor-onboarding-ui
+    path: .
+    memory: 128M
+    instances: 1
+    buildpacks:
+      - nodejs_buildpack
+    command: npm start
+    env:
+      BACKEND_URL: "https://vendor-onboarding-srv.cfapps.us10-001.hana.ondemand.com"

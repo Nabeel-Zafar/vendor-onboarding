@@ -1,0 +1,63 @@
+<mvc:View
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form"
+    controllerName="vendor.onboarding.controller.UserForm"
+    displayBlock="true">
+    <Page id="userFormPage" showNavButton="true" navButtonPress="onNavBack">
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Button icon="sap-icon://nav-back" press="onNavBack" type="Transparent" />
+                </contentLeft>
+                <contentMiddle>
+                    <Title text="{i18n>userFormTitle}" />
+                </contentMiddle>
+            </Bar>
+        </customHeader>
+        <content>
+            <VBox class="sapUiResponsiveContentPadding formSection">
+                <Panel headerText="User Information" expandable="false" expanded="true">
+                    <content>
+                        <form:SimpleForm
+                            editable="true"
+                            layout="ResponsiveGridLayout"
+                            labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
+                            emptySpanXL="0" emptySpanL="0" emptySpanM="0"
+                            columnsXL="2" columnsL="2" columnsM="1">
+                            <form:content>
+                                <core:Title text="" />
+                                <Label text="{i18n>firstName}" required="true" />
+                                <Input id="first_name" placeholder="{i18n>firstName}" />
+
+                                <Label text="{i18n>lastName}" required="true" />
+                                <Input id="last_name" placeholder="{i18n>lastName}" />
+
+                                <Label text="{i18n>userEmail}" required="true" />
+                                <Input id="user_email" placeholder="{i18n>userEmail}" type="Email" />
+
+                                <Label text="{i18n>role}" required="true" />
+                                <ComboBox id="role" placeholder="{i18n>role}"
+                                    items="{roles>/roles}">
+                                    <core:Item key="{roles>key}" text="{roles>text}" />
+                                </ComboBox>
+
+                                <Label text="{i18n>phoneNumber}" required="true" />
+                                <Input id="phone_number" placeholder="{i18n>phoneNumber}" type="Number" />
+
+                                <Label text="{i18n>password}" required="true" />
+                                <Input id="password" placeholder="{i18n>password}" type="Password" />
+                            </form:content>
+                        </form:SimpleForm>
+                    </content>
+                </Panel>
+
+                <FlexBox justifyContent="Center" class="sapUiMediumMarginTop sapUiMediumMarginBottom">
+                    <Button text="{i18n>registerButton}" type="Emphasized" press="onSubmitUser" class="sapUiSmallMarginEnd" icon="sap-icon://save" />
+                    <Button text="{i18n>cancelButton}" type="Transparent" press="onNavBack" icon="sap-icon://decline" />
+                </FlexBox>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

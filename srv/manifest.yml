@@ -1,0 +1,15 @@
+---
+applications:
+  - name: vendor-onboarding-srv
+    path: .
+    memory: 256M
+    instances: 1
+    buildpacks:
+      - nodejs_buildpack
+    command: npm start
+    env:
+      BPA_AUTH_URL: "https://9ae1299ctrial.authentication.us10.hana.ondemand.com/oauth/token"
+      BPA_CLIENT_ID: "sb-3a5c44a3-9060-475f-a07a-a62abf7bd34a!b596244|xsuaa!b49390"
+      BPA_CLIENT_SECRET: "fbd7e00e-07a1-45dd-b931-9a1fac46b1b7$YbCMcyGcP263pkmBZt6O0KjhWtSn9xh18eDWkC1N6sk="
+      BPA_WORKFLOW_URL: "https://spa-api-gateway-bpi-us-prod.cfapps.us10.hana.ondemand.com/workflow/rest/v1/workflow-instances"
+      BPA_WORKFLOW_DEFINITION_ID: "us10.9ae1299ctrial.vendoronboardingixom.vendorOnboarding"

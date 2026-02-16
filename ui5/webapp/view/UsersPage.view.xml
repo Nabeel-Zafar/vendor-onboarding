@@ -1,0 +1,68 @@
+<mvc:View
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    controllerName="vendor.onboarding.controller.UsersPage"
+    displayBlock="true">
+    <Page id="usersPage" showNavButton="true" navButtonPress="onNavBack">
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Button icon="sap-icon://nav-back" press="onNavBack" type="Transparent" />
+                </contentLeft>
+                <contentMiddle>
+                    <Title text="{i18n>usersTitle}" />
+                </contentMiddle>
+                <contentRight>
+                    <Button icon="sap-icon://add" text="{i18n>addUser}" type="Emphasized" press="onAddUser" />
+                </contentRight>
+            </Bar>
+        </customHeader>
+        <content>
+            <Table id="userTable"
+                items="{users>/Users}"
+                growing="true"
+                growingThreshold="20"
+                sticky="ColumnHeaders,HeaderToolbar"
+                noDataText="No users found."
+                class="sapUiResponsiveContentPadding">
+                <headerToolbar>
+                    <OverflowToolbar>
+                        <Title text="Users" />
+                        <ToolbarSpacer />
+                        <SearchField width="300px" placeholder="Search users..." liveChange="onSearchUser" />
+                    </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                    <Column>
+                        <Text text="{i18n>firstName}" />
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>lastName}" />
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>userEmail}" />
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>role}" />
+                    </Column>
+                    <Column minScreenWidth="Tablet">
+                        <Text text="{i18n>phoneNumber}" />
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <Text text="{users>first_name}" />
+                            <Text text="{users>last_name}" />
+                            <Text text="{users>user_email}" />
+                            <ObjectStatus
+                                text="{users>role}"
+                                state="{= ${users>role} === 'Admin' ? 'Information' : 'None'}" />
+                            <Text text="{users>phone_number}" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Page>
+</mvc:View>

@@ -1,0 +1,17 @@
+{
+  "name": "vendor-onboarding-frontend",
+  "version": "1.0.0",
+  "description": "Vendor Onboarding Frontend - SAP Fiori Application",
+  "scripts": {
+    "start": "node server.js",
+    "build": "ui5 build --clean-dest --dest dist",
+    "start:ui5": "ui5 serve --port 8080 --open index.html"
+  },
+  "devDependencies": {
+    "@ui5/cli": "^3.0.0"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "http-proxy-middleware": "^3.0.0"
+  }
+}

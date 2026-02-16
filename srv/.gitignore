@@ -1,0 +1,25 @@
+# CAP
+gen/
+node_modules/
+target/
+*.db
+*.sqlite
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-*
+.DS_Store
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# OS
+Thumbs.db

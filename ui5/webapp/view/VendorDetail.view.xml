@@ -1,0 +1,119 @@
+<mvc:View
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form"
+    controllerName="vendor.onboarding.controller.VendorDetail"
+    displayBlock="true">
+    <Page id="vendorDetailPage" showNavButton="true" navButtonPress="onNavBack">
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Button icon="sap-icon://nav-back" press="onNavBack" type="Transparent" />
+                </contentLeft>
+                <contentMiddle>
+                    <Title text="{i18n>vendorDetailTitle}" />
+                </contentMiddle>
+            </Bar>
+        </customHeader>
+        <content>
+            <VBox class="sapUiResponsiveContentPadding vendorDetailPanel">
+                <ObjectHeader
+                    id="vendorHeader"
+                    title="{detail>/company_name}"
+                    number="{detail>/_displayStatus}"
+                    numberState="{= ${detail>/_displayStatus} === 'Approved' ? 'Success' : ${detail>/_displayStatus} === 'Rejected' ? 'Error' : 'Warning'}"
+                    responsive="true"
+                    fullScreenOptimized="true"
+                    class="sapUiSmallMarginBottom vendorObjectHeader">
+                    <attributes>
+                        <ObjectAttribute title="Address" text="{detail>/company_address}" />
+                        <ObjectAttribute title="Contact" text="{detail>/contact_person_name}" />
+                        <ObjectAttribute title="Email" text="{detail>/contact_person_email}" />
+                        <ObjectAttribute title="Phone" text="{detail>/contact_person_number}" />
+                    </attributes>
+                    <statuses>
+                        <ObjectStatus
+                            text="{detail>/_displayStatus}"
+                            state="{= ${detail>/_displayStatus} === 'Approved' ? 'Success' : ${detail>/_displayStatus} === 'Rejected' ? 'Error' : 'Warning'}"
+                            icon="{= ${detail>/_displayStatus} === 'Approved' ? 'sap-icon://accept' : ${detail>/_displayStatus} === 'Rejected' ? 'sap-icon://decline' : 'sap-icon://pending'}" />
+                    </statuses>
+                </ObjectHeader>
+
+                <form:SimpleForm
+                    editable="false"
+                    layout="ResponsiveGridLayout"
+                    labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12"
+                    emptySpanXL="0" emptySpanL="0" emptySpanM="0"
+                    columnsXL="1" columnsL="1" columnsM="1"
+                    class="sapUiSmallMarginBottom vendorDetailForm">
+                    <form:content>
+                        <core:Title text="Vendor Information" />
+                        <Label text="{i18n>companyName}" design="Bold" />
+                        <Text text="{detail>/company_name}" />
+
+                        <Label text="{i18n>companyAddress}" design="Bold" />
+                        <Text text="{detail>/company_address}" />
+
+                        <Label text="{i18n>contactPersonName}" design="Bold" />
+                        <Text text="{detail>/contact_person_name}" />
+
+                        <Label text="{i18n>contactPersonEmail}" design="Bold" />
+                        <Text text="{detail>/contact_person_email}" />
+
+                        <Label text="{i18n>contactPersonNumber}" design="Bold" />
+                        <Text text="{detail>/contact_person_number}" />
+                    </form:content>
+                </form:SimpleForm>
+
+                <Panel headerText="{i18n>approvalInfo}" expandable="false" expanded="true" class="sapUiSmallMarginBottom"
+                    visible="{= ${detail>/bpaProcessed} === true}">
+                    <content>
+                        <form:SimpleForm
+                            editable="false"
+                            layout="ResponsiveGridLayout"
+                            labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12"
+                            emptySpanXL="0" emptySpanL="0" emptySpanM="0"
+                            columnsXL="1" columnsL="1" columnsM="1">
+                            <form:content>
+                                <Label text="{i18n>approvalStatus}" design="Bold" />
+                                <ObjectStatus
+                                    text="{detail>/_displayStatus}"
+                                    state="{= ${detail>/_displayStatus} === 'Approved' ? 'Success' : ${detail>/_displayStatus} === 'Rejected' ? 'Error' : 'Warning'}"
+                                    icon="{= ${detail>/_displayStatus} === 'Approved' ? 'sap-icon://accept' : ${detail>/_displayStatus} === 'Rejected' ? 'sap-icon://decline' : 'sap-icon://pending'}" />
+
+                                <Label text="{i18n>approvedBy}" design="Bold" />
+                                <Text text="{detail>/approvedBy}" />
+
+                                <Label text="{i18n>approvedAt}" design="Bold" />
+                                <Text text="{detail>/approvedAt}" />
+
+                                <Label text="{i18n>approverComments}" design="Bold" />
+                                <Text text="{detail>/comments}" />
+                            </form:content>
+                        </form:SimpleForm>
+                    </content>
+                </Panel>
+            </VBox>
+        </content>
+        <footer>
+            <Toolbar id="detailFooter">
+                <ToolbarSpacer />
+                <Button
+                    id="approveBtn"
+                    text="{i18n>approveButton}"
+                    type="Accept"
+                    icon="sap-icon://accept"
+                    press="onApprove"
+                    visible="false" />
+                <Button
+                    id="rejectBtn"
+                    text="{i18n>rejectButton}"
+                    type="Reject"
+                    icon="sap-icon://decline"
+                    press="onReject"
+                    visible="false" />
+            </Toolbar>
+        </footer>
+    </Page>
+</mvc:View>
