@@ -5,15 +5,17 @@
     displayBlock="true">
     <Page id="usersPage" showNavButton="true" navButtonPress="onNavBack">
         <customHeader>
-            <Bar>
+            <Bar class="dashboardHeader">
                 <contentLeft>
                     <Button icon="sap-icon://nav-back" press="onNavBack" type="Transparent" />
+                    <Image src="images/IXOM+Transparent.webp" height="32px" class="sapUiTinyMarginBegin dashboardLogo" />
                 </contentLeft>
                 <contentMiddle>
                     <Title text="{i18n>usersTitle}" />
                 </contentMiddle>
                 <contentRight>
                     <Button icon="sap-icon://add" text="{i18n>addUser}" type="Emphasized" press="onAddUser" />
+                    <Button icon="sap-icon://log" text="Logout" type="Transparent" press="onLogout" />
                 </contentRight>
             </Bar>
         </customHeader>
@@ -23,6 +25,7 @@
                 growing="true"
                 growingThreshold="20"
                 sticky="ColumnHeaders,HeaderToolbar"
+                alternateRowColors="true"
                 noDataText="No users found."
                 class="sapUiResponsiveContentPadding">
                 <headerToolbar>

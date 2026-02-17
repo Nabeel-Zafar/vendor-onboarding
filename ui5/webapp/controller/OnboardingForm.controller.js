@@ -10,7 +10,47 @@ sap.ui.define([
 
     return Controller.extend("vendor.onboarding.controller.OnboardingForm", {
 
-        onInit: function () {},
+        onInit: function () {
+            this._bPrefilled = false;
+            this.getOwnerComponent().getRouter()
+                .getRoute("onboarding")
+                .attachPatternMatched(this._onRouteMatched, this);
+        },
+
+        _onRouteMatched: function () {
+            if (this._bPrefilled) {
+                return;
+            }
+            this._bPrefilled = true;
+
+            var that = this;
+            // Pre-populate with sample vendor data
+            setTimeout(function () {
+                var oDefaults = {
+                    company_name: "Brenntag Australia Pty Ltd",
+                    company_address: "262 Normanby Rd, South Melbourne VIC 3205, Australia",
+                    tax_number: "ABN 15 006 309 044",
+                    industry: "Chemical Distribution",
+                    contact_person_name: "Sarah Mitchell",
+                    contact_person_email: "s.mitchell@brenntag.com.au",
+                    contact_person_number: "+61395598333",
+                    service_offering: "Industrial Chemicals & Water Treatment Solutions",
+                    reference: "IXOM Procurement - Contract #WTC-2026-041"
+                };
+
+                Object.keys(oDefaults).forEach(function (sId) {
+                    var oControl = that.byId(sId);
+                    if (oControl && oControl.setValue) {
+                        oControl.setValue(oDefaults[sId]);
+                    }
+                });
+
+                var oSelect = that.byId("company_type");
+                if (oSelect) {
+                    oSelect.setSelectedKey("Corporation");
+                }
+            }, 0);
+        },
 
         _getFieldValue: function (sId) {
             var oControl = this.byId(sId);
@@ -64,10 +104,15 @@ sap.ui.define([
 
             var oPayload = {
                 company_name: this._getFieldValue("company_name"),
+                company_type: this.byId("company_type").getSelectedKey(),
                 company_address: this._getFieldValue("company_address"),
+                tax_number: this._getFieldValue("tax_number"),
+                industry: this._getFieldValue("industry"),
                 contact_person_name: this._getFieldValue("contact_person_name"),
                 contact_person_email: this._getFieldValue("contact_person_email"),
-                contact_person_number: this._getFieldValue("contact_person_number")
+                contact_person_number: this._getFieldValue("contact_person_number"),
+                service_offering: this._getFieldValue("service_offering"),
+                reference: this._getFieldValue("reference")
             };
 
             var that = this;
@@ -108,13 +153,14 @@ sap.ui.define([
         },
 
         _clearForm: function () {
-            var aFields = [
-                "company_name", "company_address", "contact_person_name",
-                "contact_person_email", "contact_person_number"
+            var aInputFields = [
+                "company_name", "company_address", "tax_number",
+                "industry", "contact_person_name", "contact_person_email",
+                "contact_person_number", "service_offering", "reference"
             ];
 
             var that = this;
-            aFields.forEach(function (sId) {
+            aInputFields.forEach(function (sId) {
                 var oControl = that.byId(sId);
                 if (oControl) {
                     if (oControl.setValue) {
@@ -125,6 +171,11 @@ sap.ui.define([
                     }
                 }
             });
+
+            var oSelect = this.byId("company_type");
+            if (oSelect) {
+                oSelect.setSelectedKey("");
+            }
         },
 
         onLogout: function () {

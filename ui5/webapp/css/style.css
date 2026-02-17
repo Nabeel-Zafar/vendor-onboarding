@@ -1,40 +1,128 @@
-/* Vendor Onboarding Portal - SAP Horizon Theme Styles */
+/* Vendor Onboarding Portal - IXOM Brand Theme */
+
+/* ── IXOM Brand Palette ─────────────────────────────── */
+:root {
+    --ixom-teal: #00B2A9;
+    --ixom-teal-dark: #007A73;
+    --ixom-teal-darker: #005550;
+    --ixom-teal-light: #E6F7F6;
+    --ixom-teal-mid: #B2E5E2;
+}
+
+/* Override SAP Horizon theme brand color */
+.sapUiBody {
+    --sapBrandColor: var(--ixom-teal);
+    --sapHighlightColor: var(--ixom-teal);
+    --sapActiveColor: var(--ixom-teal-dark);
+    --sapLinkColor: var(--ixom-teal-dark);
+}
+
+/* ── Emphasized Buttons (teal instead of SAP blue) ─── */
+.sapMBtnEmphasized {
+    background-color: var(--ixom-teal) !important;
+    border-color: var(--ixom-teal) !important;
+}
+
+.sapMBtnEmphasized:hover {
+    background-color: var(--ixom-teal-dark) !important;
+    border-color: var(--ixom-teal-dark) !important;
+}
+
+.sapMBtnEmphasized:active,
+.sapMBtnEmphasized.sapMBtnActive {
+    background-color: var(--ixom-teal-darker) !important;
+    border-color: var(--ixom-teal-darker) !important;
+}
+
+/* ── Login Page ────────────────────────────────────── */
+.loginPage {
+    background: linear-gradient(135deg, var(--ixom-teal) 0%, var(--ixom-teal-darker) 100%);
+}
 
 .loginBox {
     background: var(--sapGroup_ContentBackground, #fff);
     border-radius: 1rem;
     padding: 3rem 2rem;
-    box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0.25rem 1.5rem rgba(0, 85, 80, 0.2);
     max-width: 420px;
     width: 100%;
+    border-top: 4px solid var(--ixom-teal);
 }
 
 .loginLogo {
     border-radius: 0.5rem;
 }
 
-.loginPage {
-    background: linear-gradient(135deg, var(--sapBrandColor, #0a6ed1) 0%, #1a3a5c 100%);
-}
-
 .loginTitle {
     color: var(--sapTextColor, #32363a);
 }
 
+/* ── App Header Bar ────────────────────────────────── */
+.dashboardHeader {
+    background: var(--ixom-teal) !important;
+}
+
+.dashboardHeader .sapMBarMiddle .sapMTitle {
+    color: #fff !important;
+}
+
+.dashboardHeader .sapMBtn .sapMBtnIcon,
+.dashboardHeader .sapMBtn .sapMBtnContent {
+    color: #fff !important;
+}
+
+.dashboardLogo {
+    object-fit: contain;
+    vertical-align: middle;
+}
+
+/* ── Form Sections ─────────────────────────────────── */
 .formSection {
-    max-width: 900px;
+    max-width: 1200px;
     margin: 0 auto;
     padding-top: 1rem;
 }
 
+.formIntro {
+    text-align: center;
+    padding: 0.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.formSubtitleText {
+    color: var(--sapNeutralTextColor, #6a6d70) !important;
+    font-size: 0.9rem;
+    max-width: 520px;
+    text-align: center;
+}
+
+.formPanel {
+    background: var(--sapGroup_ContentBackground, #fff);
+    border-radius: 0.75rem;
+    box-shadow: 0 0.125rem 0.5rem rgba(0, 85, 80, 0.08);
+    padding: 0.5rem 1rem 1rem;
+    border-top: 3px solid var(--ixom-teal);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Section titles inside forms */
+.formPanel .sapUiFormTitle,
+.formPanel .sapMTitle {
+    color: var(--ixom-teal-dark) !important;
+}
+
+/* ── Vendor Detail ─────────────────────────────────── */
 .vendorDetailPanel {
-    max-width: 900px;
+    max-width: 1200px;
     margin: 0 auto;
     padding-top: 0.5rem;
 }
 
 .vendorObjectHeader {
-    border-bottom: 2px solid var(--sapBrandColor, #0a6ed1);
+    border-bottom: 3px solid var(--ixom-teal);
     padding-bottom: 0.5rem;
 }
 
@@ -45,6 +133,7 @@
     box-shadow: 0 0.0625rem 0.25rem rgba(0, 0, 0, 0.08);
 }
 
+/* ── Status Colors ─────────────────────────────────── */
 .statusApproved {
     color: var(--sapPositiveColor, #107E3E) !important;
     font-weight: bold;
@@ -60,25 +149,112 @@
     font-weight: bold;
 }
 
-.dashboardHeader {
-    background: var(--sapBrandColor, #0a6ed1) !important;
-}
-
-.dashboardLogo {
-    object-fit: contain;
-    vertical-align: middle;
-}
-
-.dashboardHeader .sapMBarMiddle .sapMTitle {
+/* ── Dashboard Layout ─────────────────────────────── */
+.dashboardHeaderBtn .sapMBtnIcon,
+.dashboardHeaderBtn .sapMBtnContent {
     color: #fff !important;
 }
 
-.dashboardHeader .sapMBtn .sapMBtnIcon,
-.dashboardHeader .sapMBtn .sapMBtnContent {
-    color: #fff !important;
+/* Side Navigation */
+.sapTntSideNavigation {
+    background: var(--sapGroup_ContentBackground, #fff) !important;
+    border-right: 1px solid var(--ixom-teal-mid) !important;
 }
 
-.countCard {
-    padding: 1rem;
+.sapTntNavLI .sapTntNavLIItem.sapTntNavLIItemSelected {
+    background: var(--ixom-teal-light) !important;
+    border-left: 3px solid var(--ixom-teal) !important;
+}
+
+.sapTntNavLI .sapTntNavLIItem.sapTntNavLIItemSelected .sapTntNavLIText,
+.sapTntNavLI .sapTntNavLIItem.sapTntNavLIItemSelected .sapUiIcon {
+    color: var(--ixom-teal-dark) !important;
+}
+
+/* Summary Cards */
+.dashboardCards {
+    gap: 0;
+}
+
+.dashboardSummaryCard {
+    background: var(--sapGroup_ContentBackground, #fff);
+    border-radius: 0.75rem;
+    padding: 1.25rem 1.5rem;
+    min-width: 180px;
+    flex: 1;
+    box-shadow: 0 0.125rem 0.5rem rgba(0, 85, 80, 0.08);
+    border-top: 3px solid var(--ixom-teal-mid);
     text-align: center;
+}
+
+.dashboardCardAll {
+    border-top-color: var(--ixom-teal) !important;
+}
+
+.dashboardCardPending {
+    border-top-color: var(--sapCriticalColor, #E9730C) !important;
+}
+
+.dashboardCardApproved {
+    border-top-color: var(--sapPositiveColor, #107E3E) !important;
+}
+
+.dashboardCardRejected {
+    border-top-color: var(--sapNegativeColor, #BB0000) !important;
+}
+
+.dashboardCardCount {
+    font-size: 2rem !important;
+    font-weight: 700 !important;
+    color: var(--sapTextColor, #32363a) !important;
+}
+
+.dashboardCardLabel {
+    font-size: 0.85rem !important;
+    color: var(--sapNeutralTextColor, #6a6d70) !important;
+    margin-top: 0.25rem !important;
+}
+
+/* Dashboard Table */
+.dashboardTable {
+    background: var(--sapGroup_ContentBackground, #fff);
+    border-radius: 0.75rem;
+    box-shadow: 0 0.125rem 0.5rem rgba(0, 85, 80, 0.08);
+}
+
+/* ToolPage fill height */
+#dashboardPage .sapMPageEnableScrolling {
+    overflow: hidden;
+}
+
+.sapTntToolPage {
+    height: 100%;
+}
+
+/* ── Input Focus State ─────────────────────────────── */
+.sapMInputFocused .sapMInputBaseInner,
+.sapMSFI:focus {
+    border-color: var(--ixom-teal) !important;
+}
+
+.sapMInputFocused:not(.sapMInputBaseError):not(.sapMInputBaseWarning) .sapMInputBaseContentWrapper {
+    border-color: var(--ixom-teal) !important;
+}
+
+/* ── Table Header Toolbar ──────────────────────────── */
+.sapMListTblHeader {
+    border-bottom: 2px solid var(--ixom-teal-mid) !important;
+}
+
+/* ── Footer Toolbar Buttons ────────────────────────── */
+.sapMBtnAccept {
+    background-color: var(--sapPositiveColor, #107E3E) !important;
+    border-color: var(--sapPositiveColor, #107E3E) !important;
+    color: #fff !important;
+}
+
+.sapMBtnReject {
+    background-color: var(--sapNegativeColor, #BB0000) !important;
+    border-color: var(--sapNegativeColor, #BB0000) !important;
+    color: #fff !important;
 }

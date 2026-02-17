@@ -6,8 +6,8 @@ sap.ui.define([
 
     // Hardcoded users
     var USERS = {
-        "admin": { password: "admin123", role: "admin" },
-        "requester": { password: "req123", role: "requester" }
+        "admin": { password: "123456", role: "admin" },
+        "requester": { password:"123456", role: "requester" }
     };
 
     return Controller.extend("vendor.onboarding.controller.Login", {

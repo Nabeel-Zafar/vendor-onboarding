@@ -5,7 +5,7 @@ sap.ui.define([
     "sap/ui/model/FilterOperator",
     "sap/m/MessageToast",
     "sap/m/MessageBox"
-], function (Controller, JSONModel, Filter, FilterOperator, MessageToast, MessageBox) {
+], function (Controller, JSONModel, Filter, FilterOperator, MessageToast) {
     "use strict";
 
     var VENDOR_API = "/odata/v4/vendor/Vendor";
@@ -25,6 +25,13 @@ sap.ui.define([
             this.getOwnerComponent().getRouter()
                 .getRoute("dashboard")
                 .attachPatternMatched(this._onRouteMatched, this);
+
+            // Select "All Vendors" in side nav by default
+            var oSideNav = this.byId("sideNav");
+            var aItems = oSideNav.getItem().getItems();
+            if (aItems.length > 0) {
+                oSideNav.setSelectedItem(aItems[0]);
+            }
         },
 
         _onRouteMatched: function () {
@@ -98,9 +105,39 @@ sap.ui.define([
             this._oVendorsModel.setData({ Vendors: aFiltered });
         },
 
-        onTabSelect: function (oEvent) {
-            this._sCurrentFilter = oEvent.getParameter("key");
+        onSideNavSelect: function (oEvent) {
+            var oItem = oEvent.getParameter("item");
+            var sKey = oItem.getKey();
+
+            if (sKey === "AddVendor") {
+                this.onAddVendor();
+                return;
+            }
+            if (sKey === "Users") {
+                this.onNavToUsers();
+                return;
+            }
+
+            this._sCurrentFilter = sKey;
             this._applyFilter();
+            this._updateTableTitle();
+        },
+
+        onToggleSideNav: function () {
+            var oToolPage = this.byId("toolPage");
+            oToolPage.setSideExpanded(!oToolPage.getSideExpanded());
+        },
+
+        _updateTableTitle: function () {
+            var oTitle = this.byId("tableTitle");
+            var sTitleKey = {
+                "All": "allVendors",
+                "Pending": "pendingVendors",
+                "Approved": "approvedVendors",
+                "Rejected": "rejectedVendors"
+            };
+            var oBundle = this.getView().getModel("i18n").getResourceBundle();
+            oTitle.setText(oBundle.getText(sTitleKey[this._sCurrentFilter] || "allVendors"));
         },
 
         onSearch: function (oEvent) {

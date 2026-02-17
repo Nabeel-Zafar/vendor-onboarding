@@ -8,9 +8,10 @@
     displayBlock="true">
     <Page id="onboardingPage" showNavButton="true" navButtonPress="onNavBack">
         <customHeader>
-            <Bar>
+            <Bar class="dashboardHeader">
                 <contentLeft>
                     <Button icon="sap-icon://nav-back" press="onNavBack" type="Transparent" />
+                    <Image src="images/IXOM+Transparent.webp" height="32px" class="sapUiTinyMarginBegin dashboardLogo" />
                 </contentLeft>
                 <contentMiddle>
                     <Title text="{i18n>formTitle}" />
@@ -22,30 +23,66 @@
         </customHeader>
         <content>
             <VBox class="sapUiResponsiveContentPadding formSection">
-                <form:SimpleForm
-                    editable="true"
-                    layout="ResponsiveGridLayout"
-                    labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12"
-                    emptySpanXL="0" emptySpanL="0" emptySpanM="0"
-                    columnsXL="1" columnsL="1" columnsM="1"
-                    class="sapUiSmallMarginTop">
-                    <form:content>
-                        <Label text="{i18n>companyName}" required="true" />
-                        <Input id="company_name" placeholder="{i18n>companyName}" />
+                <VBox class="formIntro sapUiSmallMarginTop">
+                    <core:Icon src="sap-icon://supplier" size="2.5rem" color="#00B2A9" class="sapUiSmallMarginBottom" />
+                    <Title text="{i18n>formTitle}" level="H2" titleStyle="H3" class="sapUiTinyMarginBottom" />
+                    <Text text="{i18n>formSubtitle}" class="formSubtitleText" />
+                </VBox>
+                <Panel class="sapUiMediumMarginTop formPanel">
+                    <form:SimpleForm
+                        editable="true"
+                        layout="ResponsiveGridLayout"
+                        labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
+                        emptySpanXL="0" emptySpanL="0" emptySpanM="0"
+                        columnsXL="2" columnsL="2" columnsM="1"
+                        class="sapUiNoMargin">
+                        <form:content>
+                            <core:Title text="{i18n>companyInfo}" />
 
-                        <Label text="{i18n>companyAddress}" />
-                        <Input id="company_address" placeholder="{i18n>companyAddress}" />
+                            <Label text="{i18n>companyName}" required="true" />
+                            <Input id="company_name" placeholder="{i18n>companyName}" />
 
-                        <Label text="{i18n>contactPersonName}" required="true" />
-                        <Input id="contact_person_name" placeholder="{i18n>contactPersonName}" />
+                            <Label text="{i18n>companyType}" />
+                            <Select id="company_type" selectedKey="Corporation">
+                                <core:Item key="Sole Proprietorship" text="Sole Proprietorship" />
+                                <core:Item key="Partnership" text="Partnership" />
+                                <core:Item key="Corporation" text="Corporation" />
+                                <core:Item key="LLC" text="LLC" />
+                                <core:Item key="Non-Profit" text="Non-Profit" />
+                            </Select>
 
-                        <Label text="{i18n>contactPersonEmail}" required="true" />
-                        <Input id="contact_person_email" placeholder="{i18n>contactPersonEmail}" type="Email" />
+                            <Label text="{i18n>companyAddress}" />
+                            <Input id="company_address" placeholder="{i18n>companyAddress}" />
 
-                        <Label text="{i18n>contactPersonNumber}" required="true" />
-                        <Input id="contact_person_number" placeholder="{i18n>contactPersonNumber}" type="Number" />
-                    </form:content>
-                </form:SimpleForm>
+                            <core:Title text="{i18n>contactInfo}" />
+
+                            <Label text="{i18n>contactPersonName}" required="true" />
+                            <Input id="contact_person_name" placeholder="{i18n>contactPersonName}" />
+
+                            <Label text="{i18n>contactPersonEmail}" required="true" />
+                            <Input id="contact_person_email" placeholder="{i18n>contactPersonEmail}" type="Email" />
+
+                            <Label text="{i18n>contactPersonNumber}" required="true" />
+                            <Input id="contact_person_number" placeholder="{i18n>contactPersonNumber}" type="Tel" />
+
+                            <core:Title text="{i18n>businessDetails}" />
+
+                            <Label text="{i18n>taxNumber}" />
+                            <Input id="tax_number" placeholder="{i18n>taxNumber}" />
+
+                            <Label text="{i18n>industry}" />
+                            <Input id="industry" placeholder="{i18n>industry}" />
+
+                            <core:Title text="{i18n>servicesInfo}" />
+
+                            <Label text="{i18n>serviceOffering}" />
+                            <Input id="service_offering" placeholder="{i18n>serviceOffering}" />
+
+                            <Label text="{i18n>reference}" />
+                            <Input id="reference" placeholder="{i18n>reference}" />
+                        </form:content>
+                    </form:SimpleForm>
+                </Panel>
 
                 <FlexBox justifyContent="Center" class="sapUiMediumMarginTop sapUiMediumMarginBottom">
                     <Button text="{i18n>submitButton}" type="Emphasized" press="onSubmit" class="sapUiSmallMarginEnd" icon="sap-icon://save" />

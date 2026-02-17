@@ -132,6 +132,11 @@ sap.ui.define([
             });
         },
 
+        onLogout: function () {
+            this.getOwnerComponent().getModel("session").setProperty("/role", "");
+            this.getOwnerComponent().getRouter().navTo("login");
+        },
+
         onNavBack: function () {
             this.getOwnerComponent().getRouter().navTo("dashboard");
         }

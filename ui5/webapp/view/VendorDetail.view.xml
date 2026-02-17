@@ -7,13 +7,17 @@
     displayBlock="true">
     <Page id="vendorDetailPage" showNavButton="true" navButtonPress="onNavBack">
         <customHeader>
-            <Bar>
+            <Bar class="dashboardHeader">
                 <contentLeft>
                     <Button icon="sap-icon://nav-back" press="onNavBack" type="Transparent" />
+                    <Image src="images/IXOM+Transparent.webp" height="32px" class="sapUiTinyMarginBegin dashboardLogo" />
                 </contentLeft>
                 <contentMiddle>
                     <Title text="{i18n>vendorDetailTitle}" />
                 </contentMiddle>
+                <contentRight>
+                    <Button icon="sap-icon://log" text="Logout" type="Transparent" press="onLogout" />
+                </contentRight>
             </Bar>
         </customHeader>
         <content>
@@ -27,7 +31,7 @@
                     fullScreenOptimized="true"
                     class="sapUiSmallMarginBottom vendorObjectHeader">
                     <attributes>
-                        <ObjectAttribute title="Address" text="{detail>/company_address}" />
+                        <ObjectAttribute title="Type" text="{detail>/company_type}" />
                         <ObjectAttribute title="Contact" text="{detail>/contact_person_name}" />
                         <ObjectAttribute title="Email" text="{detail>/contact_person_email}" />
                         <ObjectAttribute title="Phone" text="{detail>/contact_person_number}" />
@@ -40,59 +44,84 @@
                     </statuses>
                 </ObjectHeader>
 
-                <form:SimpleForm
-                    editable="false"
-                    layout="ResponsiveGridLayout"
-                    labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12"
-                    emptySpanXL="0" emptySpanL="0" emptySpanM="0"
-                    columnsXL="1" columnsL="1" columnsM="1"
-                    class="sapUiSmallMarginBottom vendorDetailForm">
-                    <form:content>
-                        <core:Title text="Vendor Information" />
-                        <Label text="{i18n>companyName}" design="Bold" />
-                        <Text text="{detail>/company_name}" />
+                <Panel class="sapUiSmallMarginBottom formPanel">
+                    <form:SimpleForm
+                        editable="false"
+                        layout="ResponsiveGridLayout"
+                        labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
+                        emptySpanXL="0" emptySpanL="0" emptySpanM="0"
+                        columnsXL="2" columnsL="2" columnsM="1"
+                        class="sapUiNoMargin">
+                        <form:content>
+                            <core:Title text="{i18n>companyInfo}" />
 
-                        <Label text="{i18n>companyAddress}" design="Bold" />
-                        <Text text="{detail>/company_address}" />
+                            <Label text="{i18n>companyName}" design="Bold" wrapping="true" />
+                            <Text text="{detail>/company_name}" wrapping="true" />
 
-                        <Label text="{i18n>contactPersonName}" design="Bold" />
-                        <Text text="{detail>/contact_person_name}" />
+                            <Label text="{i18n>companyType}" design="Bold" wrapping="true" />
+                            <Text text="{detail>/company_type}" wrapping="true" />
 
-                        <Label text="{i18n>contactPersonEmail}" design="Bold" />
-                        <Text text="{detail>/contact_person_email}" />
+                            <Label text="{i18n>companyAddress}" design="Bold" wrapping="true" />
+                            <Text text="{detail>/company_address}" wrapping="true" />
 
-                        <Label text="{i18n>contactPersonNumber}" design="Bold" />
-                        <Text text="{detail>/contact_person_number}" />
-                    </form:content>
-                </form:SimpleForm>
+                            <core:Title text="{i18n>contactInfo}" />
 
-                <Panel headerText="{i18n>approvalInfo}" expandable="false" expanded="true" class="sapUiSmallMarginBottom"
+                            <Label text="{i18n>contactPersonName}" design="Bold" wrapping="true" />
+                            <Text text="{detail>/contact_person_name}" wrapping="true" />
+
+                            <Label text="{i18n>contactPersonEmail}" design="Bold" wrapping="true" />
+                            <Text text="{detail>/contact_person_email}" wrapping="true" />
+
+                            <Label text="{i18n>contactPersonNumber}" design="Bold" wrapping="true" />
+                            <Text text="{detail>/contact_person_number}" wrapping="true" />
+
+                            <core:Title text="{i18n>businessDetails}" />
+
+                            <Label text="{i18n>taxNumber}" design="Bold" wrapping="true" />
+                            <Text text="{detail>/tax_number}" wrapping="true" />
+
+                            <Label text="{i18n>industry}" design="Bold" wrapping="true" />
+                            <Text text="{detail>/industry}" wrapping="true" />
+
+                            <core:Title text="{i18n>servicesInfo}" />
+
+                            <Label text="{i18n>serviceOffering}" design="Bold" wrapping="true" />
+                            <Text text="{detail>/service_offering}" wrapping="true" />
+
+                            <Label text="{i18n>reference}" design="Bold" wrapping="true" />
+                            <Text text="{detail>/reference}" wrapping="true" />
+                        </form:content>
+                    </form:SimpleForm>
+                </Panel>
+
+                <Panel class="sapUiSmallMarginBottom formPanel"
                     visible="{= ${detail>/bpaProcessed} === true}">
-                    <content>
-                        <form:SimpleForm
-                            editable="false"
-                            layout="ResponsiveGridLayout"
-                            labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12"
-                            emptySpanXL="0" emptySpanL="0" emptySpanM="0"
-                            columnsXL="1" columnsL="1" columnsM="1">
-                            <form:content>
-                                <Label text="{i18n>approvalStatus}" design="Bold" />
-                                <ObjectStatus
-                                    text="{detail>/_displayStatus}"
-                                    state="{= ${detail>/_displayStatus} === 'Approved' ? 'Success' : ${detail>/_displayStatus} === 'Rejected' ? 'Error' : 'Warning'}"
-                                    icon="{= ${detail>/_displayStatus} === 'Approved' ? 'sap-icon://accept' : ${detail>/_displayStatus} === 'Rejected' ? 'sap-icon://decline' : 'sap-icon://pending'}" />
+                    <form:SimpleForm
+                        editable="false"
+                        layout="ResponsiveGridLayout"
+                        labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
+                        emptySpanXL="0" emptySpanL="0" emptySpanM="0"
+                        columnsXL="2" columnsL="2" columnsM="1"
+                        class="sapUiNoMargin">
+                        <form:content>
+                            <core:Title text="{i18n>approvalInfo}" />
 
-                                <Label text="{i18n>approvedBy}" design="Bold" />
-                                <Text text="{detail>/approvedBy}" />
+                            <Label text="{i18n>approvalStatus}" design="Bold" wrapping="true" />
+                            <ObjectStatus
+                                text="{detail>/_displayStatus}"
+                                state="{= ${detail>/_displayStatus} === 'Approved' ? 'Success' : ${detail>/_displayStatus} === 'Rejected' ? 'Error' : 'Warning'}"
+                                icon="{= ${detail>/_displayStatus} === 'Approved' ? 'sap-icon://accept' : ${detail>/_displayStatus} === 'Rejected' ? 'sap-icon://decline' : 'sap-icon://pending'}" />
 
-                                <Label text="{i18n>approvedAt}" design="Bold" />
-                                <Text text="{detail>/approvedAt}" />
+                            <Label text="{i18n>approvedBy}" design="Bold" wrapping="true" />
+                            <Text text="{detail>/approvedBy}" wrapping="true" />
 
-                                <Label text="{i18n>approverComments}" design="Bold" />
-                                <Text text="{detail>/comments}" />
-                            </form:content>
-                        </form:SimpleForm>
-                    </content>
+                            <Label text="{i18n>approvedAt}" design="Bold" wrapping="true" />
+                            <Text text="{detail>/approvedAt}" wrapping="true" />
+
+                            <Label text="{i18n>approverComments}" design="Bold" wrapping="true" />
+                            <Text text="{detail>/comments}" wrapping="true" />
+                        </form:content>
+                    </form:SimpleForm>
                 </Panel>
             </VBox>
         </content>
