@@ -1,7 +1,28 @@
 <mvc:View
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
+    xmlns:f="sap.f"
     controllerName="vendor.onboarding.controller.App"
-    displayBlock="true">
-    <App id="appContainer" />
+    displayBlock="true"
+    height="100%">
+    <VBox height="100%" renderType="Bare">
+        <f:ShellBar
+            id="shellBar"
+            title="Vendor Onboarding Portal"
+            showNavButton="{appState>/showNavButton}"
+            navButtonPressed="onNavBack"
+            homeIcon="images/IXOM+Transparent.webp"
+            homeIconPressed="onHomePress"
+            showMenuButton="false"
+            visible="{appState>/shellBarVisible}">
+            <f:profile>
+                <Avatar initials="A" displaySize="XS" press="onAvatarPress" />
+            </f:profile>
+        </f:ShellBar>
+        <App id="appPages">
+            <layoutData>
+                <FlexItemData growFactor="1" />
+            </layoutData>
+        </App>
+    </VBox>
 </mvc:View>

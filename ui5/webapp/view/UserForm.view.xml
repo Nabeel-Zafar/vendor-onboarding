@@ -3,65 +3,58 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:core="sap.ui.core"
     xmlns:form="sap.ui.layout.form"
+    xmlns:f="sap.f"
     controllerName="vendor.onboarding.controller.UserForm"
     displayBlock="true">
-    <Page id="userFormPage" showNavButton="true" navButtonPress="onNavBack">
-        <customHeader>
-            <Bar class="dashboardHeader">
-                <contentLeft>
-                    <Button icon="sap-icon://nav-back" press="onNavBack" type="Transparent" />
-                    <Image src="images/IXOM+Transparent.webp" height="32px" class="sapUiTinyMarginBegin dashboardLogo" />
-                </contentLeft>
-                <contentMiddle>
+    <f:DynamicPage id="userFormPage" showFooter="true" fitContent="false">
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
                     <Title text="{i18n>userFormTitle}" />
-                </contentMiddle>
-                <contentRight>
-                    <Button icon="sap-icon://log" text="Logout" type="Transparent" press="onLogout" />
-                </contentRight>
-            </Bar>
-        </customHeader>
-        <content>
-            <VBox class="sapUiResponsiveContentPadding formSection">
-                <Panel class="sapUiSmallMarginTop formPanel">
-                    <form:SimpleForm
-                        editable="true"
-                        layout="ResponsiveGridLayout"
-                        labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
-                        emptySpanXL="0" emptySpanL="0" emptySpanM="0"
-                        columnsXL="2" columnsL="2" columnsM="1"
-                        class="sapUiNoMargin">
-                        <form:content>
-                            <core:Title text="Account Details" />
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:content>
+            <VBox class="sapUiResponsiveContentPadding">
+                <form:SimpleForm
+                    editable="true"
+                    layout="ResponsiveGridLayout"
+                    labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
+                    emptySpanXL="0" emptySpanL="0" emptySpanM="0"
+                    columnsXL="2" columnsL="2" columnsM="1">
+                    <form:content>
+                        <core:Title text="Account Details" />
 
-                            <Label text="{i18n>firstName}" required="true" />
-                            <Input id="first_name" placeholder="{i18n>firstName}" />
+                        <Label text="{i18n>firstName}" required="true" />
+                        <Input id="first_name" placeholder="{i18n>firstName}" />
 
-                            <Label text="{i18n>lastName}" required="true" />
-                            <Input id="last_name" placeholder="{i18n>lastName}" />
+                        <Label text="{i18n>lastName}" required="true" />
+                        <Input id="last_name" placeholder="{i18n>lastName}" />
 
-                            <Label text="{i18n>userEmail}" required="true" />
-                            <Input id="user_email" placeholder="{i18n>userEmail}" type="Email" />
+                        <Label text="{i18n>userEmail}" required="true" />
+                        <Input id="user_email" placeholder="{i18n>userEmail}" type="Email" />
 
-                            <Label text="{i18n>role}" required="true" />
-                            <ComboBox id="role" placeholder="{i18n>role}"
-                                items="{roles>/roles}">
-                                <core:Item key="{roles>key}" text="{roles>text}" />
-                            </ComboBox>
+                        <Label text="{i18n>role}" required="true" />
+                        <ComboBox id="role" placeholder="{i18n>role}"
+                            items="{roles>/roles}">
+                            <core:Item key="{roles>key}" text="{roles>text}" />
+                        </ComboBox>
 
-                            <Label text="{i18n>phoneNumber}" required="true" />
-                            <Input id="phone_number" placeholder="{i18n>phoneNumber}" type="Tel" />
+                        <Label text="{i18n>phoneNumber}" required="true" />
+                        <Input id="phone_number" placeholder="{i18n>phoneNumber}" type="Tel" />
 
-                            <Label text="{i18n>password}" required="true" />
-                            <Input id="password" placeholder="{i18n>password}" type="Password" />
-                        </form:content>
-                    </form:SimpleForm>
-                </Panel>
-
-                <FlexBox justifyContent="Center" class="sapUiMediumMarginTop sapUiMediumMarginBottom">
-                    <Button text="{i18n>registerButton}" type="Emphasized" press="onSubmitUser" class="sapUiSmallMarginEnd" icon="sap-icon://save" />
-                    <Button text="{i18n>cancelButton}" type="Transparent" press="onNavBack" icon="sap-icon://decline" />
-                </FlexBox>
+                        <Label text="{i18n>password}" required="true" />
+                        <Input id="password" placeholder="{i18n>password}" type="Password" />
+                    </form:content>
+                </form:SimpleForm>
             </VBox>
-        </content>
-    </Page>
+        </f:content>
+        <f:footer>
+            <OverflowToolbar>
+                <ToolbarSpacer />
+                <Button text="{i18n>registerButton}" type="Emphasized" press="onSubmitUser" icon="sap-icon://save" />
+                <Button text="{i18n>cancelButton}" type="Transparent" press="onNavBack" icon="sap-icon://decline" />
+            </OverflowToolbar>
+        </f:footer>
+    </f:DynamicPage>
 </mvc:View>

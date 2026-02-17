@@ -32,7 +32,8 @@
         "sap.ui.core": {},
         "sap.ui.layout": {},
         "sap.f": {},
-        "sap.tnt": {}
+        "sap.tnt": {},
+        "sap.uxap": {}
       }
     },
     "contentDensities": {
@@ -59,7 +60,7 @@
         "routerClass": "sap.m.routing.Router",
         "viewType": "XML",
         "viewPath": "vendor.onboarding.view",
-        "controlId": "appContainer",
+        "controlId": "appPages",
         "controlAggregation": "pages",
         "async": true
       },

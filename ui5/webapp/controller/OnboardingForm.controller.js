@@ -178,11 +178,6 @@ sap.ui.define([
             }
         },
 
-        onLogout: function () {
-            this.getOwnerComponent().getModel("session").setProperty("/role", "");
-            this.getOwnerComponent().getRouter().navTo("login");
-        },
-
         onNavBack: function () {
             var sRole = this.getOwnerComponent().getModel("session").getProperty("/role");
             if (sRole === "admin") {

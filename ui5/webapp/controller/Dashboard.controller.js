@@ -3,8 +3,7 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
-    "sap/m/MessageToast",
-    "sap/m/MessageBox"
+    "sap/m/MessageToast"
 ], function (Controller, JSONModel, Filter, FilterOperator, MessageToast) {
     "use strict";
 
@@ -25,13 +24,6 @@ sap.ui.define([
             this.getOwnerComponent().getRouter()
                 .getRoute("dashboard")
                 .attachPatternMatched(this._onRouteMatched, this);
-
-            // Select "All Vendors" in side nav by default
-            var oSideNav = this.byId("sideNav");
-            var aItems = oSideNav.getItem().getItems();
-            if (aItems.length > 0) {
-                oSideNav.setSelectedItem(aItems[0]);
-            }
         },
 
         _onRouteMatched: function () {
@@ -69,7 +61,6 @@ sap.ui.define([
                 .then(function (data) {
                     var aVendors = data.value || [];
 
-                    // Enrich vendors with display status
                     aVendors.forEach(function (v) {
                         v._displayStatus = that._getDisplayStatus(v);
                     });
@@ -105,27 +96,10 @@ sap.ui.define([
             this._oVendorsModel.setData({ Vendors: aFiltered });
         },
 
-        onSideNavSelect: function (oEvent) {
-            var oItem = oEvent.getParameter("item");
-            var sKey = oItem.getKey();
-
-            if (sKey === "AddVendor") {
-                this.onAddVendor();
-                return;
-            }
-            if (sKey === "Users") {
-                this.onNavToUsers();
-                return;
-            }
-
-            this._sCurrentFilter = sKey;
+        onStatusFilterChange: function (oEvent) {
+            this._sCurrentFilter = oEvent.getParameter("selectedItem").getKey();
             this._applyFilter();
             this._updateTableTitle();
-        },
-
-        onToggleSideNav: function () {
-            var oToolPage = this.byId("toolPage");
-            oToolPage.setSideExpanded(!oToolPage.getSideExpanded());
         },
 
         _updateTableTitle: function () {
@@ -177,11 +151,6 @@ sap.ui.define([
 
         onNavToUsers: function () {
             this.getOwnerComponent().getRouter().navTo("users");
-        },
-
-        onLogout: function () {
-            this.getOwnerComponent().getModel("session").setProperty("/role", "");
-            this.getOwnerComponent().getRouter().navTo("login");
         }
     });
 });

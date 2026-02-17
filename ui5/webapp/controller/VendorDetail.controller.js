@@ -57,6 +57,12 @@ sap.ui.define([
                 .then(function (oVendor) {
                     oVendor._displayStatus = that._getDisplayStatus(oVendor);
                     that._oDetailModel.setData(oVendor);
+
+                    // Show approve/reject buttons only for Pending vendors
+                    var bPending = oVendor._displayStatus === "Pending";
+                    that.byId("approveBtn").setVisible(bPending);
+                    that.byId("rejectBtn").setVisible(bPending);
+
                     that.getView().setBusy(false);
                 })
                 .catch(function (error) {
@@ -122,19 +128,12 @@ sap.ui.define([
                     ? "Vendor approved successfully!"
                     : "Vendor rejected successfully!";
                 MessageToast.show(sMessage);
-
-                // Reload the vendor detail to reflect new status
                 that._loadVendorDetail(that._sVendorId);
             })
             .catch(function (error) {
                 that.getView().setBusy(false);
                 MessageBox.error("Failed to update vendor status: " + error.message);
             });
-        },
-
-        onLogout: function () {
-            this.getOwnerComponent().getModel("session").setProperty("/role", "");
-            this.getOwnerComponent().getRouter().navTo("login");
         },
 
         onNavBack: function () {

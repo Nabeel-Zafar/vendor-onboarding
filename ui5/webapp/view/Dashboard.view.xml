@@ -2,113 +2,112 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
-    xmlns:tnt="sap.tnt"
+    xmlns:f="sap.f"
     controllerName="vendor.onboarding.controller.Dashboard">
-    <Page id="dashboardPage" showHeader="true" showFooter="false" enableScrolling="false">
-        <customHeader>
-            <Bar class="dashboardHeader">
-                <contentLeft>
-                    <Button icon="sap-icon://menu2" type="Transparent" press="onToggleSideNav" class="dashboardHeaderBtn" />
-                    <Image src="images/IXOM+Transparent.webp" height="32px" class="sapUiTinyMarginBegin dashboardLogo" />
-                </contentLeft>
-                <contentMiddle>
-                    <Title text="{i18n>dashboardTitle}" />
-                </contentMiddle>
-                <contentRight>
-                    <Button icon="sap-icon://log" text="Logout" type="Transparent" press="onLogout" class="dashboardHeaderBtn" />
-                </contentRight>
-            </Bar>
-        </customHeader>
-        <content>
-            <tnt:ToolPage id="toolPage">
-                <tnt:sideContent>
-                    <tnt:SideNavigation id="sideNav" itemSelect="onSideNavSelect">
-                        <tnt:NavigationList>
-                            <tnt:NavigationListItem text="{i18n>addVendor}" icon="sap-icon://add" key="AddVendor" />
-                            <tnt:NavigationListItem text="All Vendors" icon="sap-icon://list" key="All" expanded="true">
-                                <tnt:NavigationListItem text="Pending" icon="sap-icon://pending" key="Pending" />
-                                <tnt:NavigationListItem text="Approved" icon="sap-icon://accept" key="Approved" />
-                                <tnt:NavigationListItem text="Rejected" icon="sap-icon://decline" key="Rejected" />
-                            </tnt:NavigationListItem>
-                            <!-- <tnt:NavigationListItem text="{i18n>usersTitle}" icon="sap-icon://group" key="Users" /> -->
-                        </tnt:NavigationList>
-                    </tnt:SideNavigation>
-                </tnt:sideContent>
-                <tnt:mainContents>
-                    <ScrollContainer height="100%" vertical="true" horizontal="false">
-                        <!-- Summary Cards -->
-                        <HBox class="sapUiMediumMargin dashboardCards" wrap="Wrap">
-                            <VBox class="dashboardSummaryCard dashboardCardAll sapUiSmallMarginEnd sapUiSmallMarginBottom">
-                                <Text text="{counts>/all}" class="dashboardCardCount" />
-                                <Text text="Total Vendors" class="dashboardCardLabel" />
-                            </VBox>
-                            <VBox class="dashboardSummaryCard dashboardCardPending sapUiSmallMarginEnd sapUiSmallMarginBottom">
-                                <Text text="{counts>/pending}" class="dashboardCardCount" />
-                                <Text text="Pending" class="dashboardCardLabel" />
-                            </VBox>
-                            <VBox class="dashboardSummaryCard dashboardCardApproved sapUiSmallMarginEnd sapUiSmallMarginBottom">
-                                <Text text="{counts>/approved}" class="dashboardCardCount" />
-                                <Text text="Approved" class="dashboardCardLabel" />
-                            </VBox>
-                            <VBox class="dashboardSummaryCard dashboardCardRejected sapUiSmallMarginBottom">
-                                <Text text="{counts>/rejected}" class="dashboardCardCount" />
-                                <Text text="Rejected" class="dashboardCardLabel" />
-                            </VBox>
-                        </HBox>
-                        <!-- Vendor Table -->
-                        <Table id="vendorTable"
-                            items="{vendors>/Vendors}"
-                            growing="true"
-                            growingThreshold="20"
-                            mode="None"
-                            sticky="ColumnHeaders,HeaderToolbar"
-                            alternateRowColors="true"
-                            noDataText="{i18n>noVendors}"
-                            class="sapUiMediumMarginBegin sapUiMediumMarginEnd sapUiSmallMarginBottom dashboardTable">
-                            <headerToolbar>
-                                <OverflowToolbar>
-                                    <Title id="tableTitle" text="{i18n>allVendors}" />
-                                    <ToolbarSpacer />
-                                    <SearchField width="300px" placeholder="{i18n>searchPlaceholder}" liveChange="onSearch" />
-                                </OverflowToolbar>
-                            </headerToolbar>
-                            <columns>
-                                <Column width="25%">
-                                    <Text text="{i18n>companyName}" />
-                                </Column>
-                                <Column width="20%">
-                                    <Text text="{i18n>contactPersonName}" />
-                                </Column>
-                                <Column width="22%" minScreenWidth="Tablet">
-                                    <Text text="{i18n>contactPersonEmail}" />
-                                </Column>
-                                <Column width="15%" minScreenWidth="Tablet">
-                                    <Text text="{i18n>contactPersonNumber}" />
-                                </Column>
-                                <Column width="18%" hAlign="Center">
-                                    <Text text="Status" />
-                                </Column>
-                            </columns>
-                            <items>
-                                <ColumnListItem type="Navigation" press="onVendorPress">
-                                    <cells>
-                                        <ObjectIdentifier
-                                            title="{vendors>company_name}"
-                                            text="{vendors>company_address}" />
-                                        <Text text="{vendors>contact_person_name}" />
-                                        <Text text="{vendors>contact_person_email}" />
-                                        <Text text="{vendors>contact_person_number}" />
-                                        <ObjectStatus
-                                            text="{vendors>_displayStatus}"
-                                            state="{= ${vendors>_displayStatus} === 'Approved' ? 'Success' : ${vendors>_displayStatus} === 'Rejected' ? 'Error' : 'Warning'}"
-                                            icon="{= ${vendors>_displayStatus} === 'Approved' ? 'sap-icon://accept' : ${vendors>_displayStatus} === 'Rejected' ? 'sap-icon://decline' : 'sap-icon://pending'}" />
-                                    </cells>
-                                </ColumnListItem>
-                            </items>
-                        </Table>
-                    </ScrollContainer>
-                </tnt:mainContents>
-            </tnt:ToolPage>
-        </content>
-    </Page>
+    <f:DynamicPage id="dashboardPage" showFooter="false" fitContent="true">
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title text="{i18n>allVendors}" id="tableTitle" />
+                </f:heading>
+                <f:actions>
+                    <Button text="{i18n>addVendor}" icon="sap-icon://add" type="Emphasized" press="onAddVendor" />
+                    <Button text="Users" icon="sap-icon://group" type="Transparent" press="onNavToUsers" />
+                </f:actions>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:header>
+            <f:DynamicPageHeader pinnable="true">
+                <HBox wrap="Wrap" class="sapUiSmallMarginBottom">
+                    <VBox class="sapUiSmallMarginEnd sapUiSmallMarginBottom" width="150px">
+                        <NumericContent
+                            value="{counts>/all}"
+                            icon="sap-icon://customer"
+                            valueColor="Neutral"
+                            withMargin="false" />
+                        <Label text="Total Vendors" class="sapUiTinyMarginTop" />
+                    </VBox>
+                    <VBox class="sapUiSmallMarginEnd sapUiSmallMarginBottom" width="150px">
+                        <NumericContent
+                            value="{counts>/pending}"
+                            icon="sap-icon://pending"
+                            valueColor="Critical"
+                            withMargin="false" />
+                        <Label text="Pending" class="sapUiTinyMarginTop" />
+                    </VBox>
+                    <VBox class="sapUiSmallMarginEnd sapUiSmallMarginBottom" width="150px">
+                        <NumericContent
+                            value="{counts>/approved}"
+                            icon="sap-icon://accept"
+                            valueColor="Good"
+                            withMargin="false" />
+                        <Label text="Approved" class="sapUiTinyMarginTop" />
+                    </VBox>
+                    <VBox class="sapUiSmallMarginBottom" width="150px">
+                        <NumericContent
+                            value="{counts>/rejected}"
+                            icon="sap-icon://decline"
+                            valueColor="Error"
+                            withMargin="false" />
+                        <Label text="Rejected" class="sapUiTinyMarginTop" />
+                    </VBox>
+                </HBox>
+                <HBox alignItems="Center">
+                    <Label text="Status:" class="sapUiSmallMarginEnd" />
+                    <Select id="statusFilter" change="onStatusFilterChange" selectedKey="All">
+                        <core:Item key="All" text="All" />
+                        <core:Item key="Pending" text="Pending" />
+                        <core:Item key="Approved" text="Approved" />
+                        <core:Item key="Rejected" text="Rejected" />
+                    </Select>
+                    <ToolbarSpacer />
+                    <SearchField width="300px" placeholder="{i18n>searchPlaceholder}" liveChange="onSearch" class="sapUiSmallMarginBegin" />
+                </HBox>
+            </f:DynamicPageHeader>
+        </f:header>
+        <f:content>
+            <Table id="vendorTable"
+                items="{vendors>/Vendors}"
+                growing="true"
+                growingThreshold="20"
+                mode="None"
+                sticky="ColumnHeaders,HeaderToolbar"
+                alternateRowColors="true"
+                noDataText="{i18n>noVendors}">
+                <columns>
+                    <Column width="25%">
+                        <Text text="{i18n>companyName}" />
+                    </Column>
+                    <Column width="20%">
+                        <Text text="{i18n>contactPersonName}" />
+                    </Column>
+                    <Column width="22%" minScreenWidth="Tablet">
+                        <Text text="{i18n>contactPersonEmail}" />
+                    </Column>
+                    <Column width="15%" minScreenWidth="Tablet">
+                        <Text text="{i18n>contactPersonNumber}" />
+                    </Column>
+                    <Column width="18%" hAlign="Center">
+                        <Text text="Status" />
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem type="Navigation" press="onVendorPress">
+                        <cells>
+                            <ObjectIdentifier
+                                title="{vendors>company_name}"
+                                text="{vendors>company_address}" />
+                            <Text text="{vendors>contact_person_name}" />
+                            <Text text="{vendors>contact_person_email}" />
+                            <Text text="{vendors>contact_person_number}" />
+                            <ObjectStatus
+                                text="{vendors>_displayStatus}"
+                                state="{= ${vendors>_displayStatus} === 'Approved' ? 'Success' : ${vendors>_displayStatus} === 'Rejected' ? 'Error' : 'Warning'}"
+                                icon="{= ${vendors>_displayStatus} === 'Approved' ? 'sap-icon://accept' : ${vendors>_displayStatus} === 'Rejected' ? 'sap-icon://decline' : 'sap-icon://pending'}" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </f:content>
+    </f:DynamicPage>
 </mvc:View>

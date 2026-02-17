@@ -1,40 +1,33 @@
 <mvc:View
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.f"
     controllerName="vendor.onboarding.controller.UsersPage"
     displayBlock="true">
-    <Page id="usersPage" showNavButton="true" navButtonPress="onNavBack">
-        <customHeader>
-            <Bar class="dashboardHeader">
-                <contentLeft>
-                    <Button icon="sap-icon://nav-back" press="onNavBack" type="Transparent" />
-                    <Image src="images/IXOM+Transparent.webp" height="32px" class="sapUiTinyMarginBegin dashboardLogo" />
-                </contentLeft>
-                <contentMiddle>
+    <f:DynamicPage id="usersPage" showFooter="false" fitContent="true">
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
                     <Title text="{i18n>usersTitle}" />
-                </contentMiddle>
-                <contentRight>
-                    <Button icon="sap-icon://add" text="{i18n>addUser}" type="Emphasized" press="onAddUser" />
-                    <Button icon="sap-icon://log" text="Logout" type="Transparent" press="onLogout" />
-                </contentRight>
-            </Bar>
-        </customHeader>
-        <content>
+                </f:heading>
+                <f:actions>
+                    <Button text="{i18n>addUser}" icon="sap-icon://add" type="Emphasized" press="onAddUser" />
+                </f:actions>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:header>
+            <f:DynamicPageHeader pinnable="false">
+                <SearchField width="300px" placeholder="Search users..." liveChange="onSearchUser" />
+            </f:DynamicPageHeader>
+        </f:header>
+        <f:content>
             <Table id="userTable"
                 items="{users>/Users}"
                 growing="true"
                 growingThreshold="20"
                 sticky="ColumnHeaders,HeaderToolbar"
                 alternateRowColors="true"
-                noDataText="No users found."
-                class="sapUiResponsiveContentPadding">
-                <headerToolbar>
-                    <OverflowToolbar>
-                        <Title text="Users" />
-                        <ToolbarSpacer />
-                        <SearchField width="300px" placeholder="Search users..." liveChange="onSearchUser" />
-                    </OverflowToolbar>
-                </headerToolbar>
+                noDataText="No users found.">
                 <columns>
                     <Column>
                         <Text text="{i18n>firstName}" />
@@ -66,6 +59,6 @@
                     </ColumnListItem>
                 </items>
             </Table>
-        </content>
-    </Page>
+        </f:content>
+    </f:DynamicPage>
 </mvc:View>
