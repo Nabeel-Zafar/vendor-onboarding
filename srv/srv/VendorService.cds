@@ -7,6 +7,8 @@ service VendorService {
      type MyInputType: {
         vendorId: String;
         status: String;
+        approvedBy: String;
+        comments: String;
     };
 
     type MyOutputType: {

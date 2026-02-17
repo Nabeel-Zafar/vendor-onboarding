@@ -58,11 +58,6 @@ sap.ui.define([
                     oVendor._displayStatus = that._getDisplayStatus(oVendor);
                     that._oDetailModel.setData(oVendor);
 
-                    // Show approve/reject buttons only for Pending vendors
-                    var bPending = oVendor._displayStatus === "Pending";
-                    that.byId("approveBtn").setVisible(bPending);
-                    that.byId("rejectBtn").setVisible(bPending);
-
                     that.getView().setBusy(false);
                 })
                 .catch(function (error) {
@@ -96,14 +91,17 @@ sap.ui.define([
             });
         },
 
-        _updateVendorStatus: function (sStatus) {
+        _updateVendorStatus: function (sStatus, sComments) {
             var that = this;
             this.getView().setBusy(true);
 
+            var sUser = this.getOwnerComponent().getModel("session").getProperty("/username") || "Admin";
             var oPayload = {
                 input: {
                     vendorId: this._sVendorId,
-                    status: sStatus
+                    status: sStatus,
+                    approvedBy: sUser,
+                    comments: sComments || ""
                 }
             };
 

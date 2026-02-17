@@ -3,178 +3,134 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:core="sap.ui.core"
     xmlns:form="sap.ui.layout.form"
-    xmlns:uxap="sap.uxap"
+    xmlns:f="sap.f"
+    xmlns:l="sap.ui.layout"
     controllerName="vendor.onboarding.controller.VendorDetail"
     displayBlock="true">
-    <uxap:ObjectPageLayout id="vendorDetailPage" showTitleInHeaderContent="false" useIconTabBar="false">
-        <uxap:headerTitle>
-            <uxap:ObjectPageDynamicHeaderTitle>
-                <uxap:heading>
+    <f:DynamicPage id="vendorDetailPage" showFooter="false">
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
                     <Title text="{detail>/company_name}" />
-                </uxap:heading>
-                <uxap:expandedContent>
+                </f:heading>
+                <f:expandedContent>
                     <ObjectStatus
                         text="{detail>/_displayStatus}"
                         state="{= ${detail>/_displayStatus} === 'Approved' ? 'Success' : ${detail>/_displayStatus} === 'Rejected' ? 'Error' : 'Warning'}"
                         icon="{= ${detail>/_displayStatus} === 'Approved' ? 'sap-icon://accept' : ${detail>/_displayStatus} === 'Rejected' ? 'sap-icon://decline' : 'sap-icon://pending'}" />
-                </uxap:expandedContent>
-                <uxap:snappedContent>
+                </f:expandedContent>
+                <f:snappedContent>
                     <ObjectStatus
                         text="{detail>/_displayStatus}"
                         state="{= ${detail>/_displayStatus} === 'Approved' ? 'Success' : ${detail>/_displayStatus} === 'Rejected' ? 'Error' : 'Warning'}"
                         icon="{= ${detail>/_displayStatus} === 'Approved' ? 'sap-icon://accept' : ${detail>/_displayStatus} === 'Rejected' ? 'sap-icon://decline' : 'sap-icon://pending'}" />
-                </uxap:snappedContent>
-                <uxap:actions>
-                    <Button
-                        id="approveBtn"
-                        text="{i18n>approveButton}"
-                        type="Accept"
-                        icon="sap-icon://accept"
-                        press="onApprove"
-                        visible="false" />
-                    <Button
-                        id="rejectBtn"
-                        text="{i18n>rejectButton}"
-                        type="Reject"
-                        icon="sap-icon://decline"
-                        press="onReject"
-                        visible="false" />
-                </uxap:actions>
-            </uxap:ObjectPageDynamicHeaderTitle>
-        </uxap:headerTitle>
-        <uxap:headerContent>
-            <HBox>
-                <VBox class="sapUiSmallMarginEnd">
-                    <Label text="Type" design="Bold" />
-                    <Text text="{detail>/company_type}" />
-                </VBox>
-                <VBox class="sapUiSmallMarginEnd">
-                    <Label text="Contact" design="Bold" />
-                    <Text text="{detail>/contact_person_name}" />
-                </VBox>
-                <VBox class="sapUiSmallMarginEnd">
-                    <Label text="Email" design="Bold" />
-                    <Text text="{detail>/contact_person_email}" />
-                </VBox>
-                <VBox>
-                    <Label text="Phone" design="Bold" />
-                    <Text text="{detail>/contact_person_number}" />
-                </VBox>
-            </HBox>
-        </uxap:headerContent>
-        <uxap:sections>
-            <uxap:ObjectPageSection title="{i18n>companyInfo}">
-                <uxap:subSections>
-                    <uxap:ObjectPageSubSection>
-                        <uxap:blocks>
-                            <form:SimpleForm
-                                editable="false"
-                                layout="ResponsiveGridLayout"
-                                labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
-                                emptySpanXL="0" emptySpanL="0" emptySpanM="0"
-                                columnsXL="2" columnsL="2" columnsM="1">
-                                <form:content>
-                                    <Label text="{i18n>companyName}" design="Bold" />
-                                    <Text text="{detail>/company_name}" wrapping="true" />
+                </f:snappedContent>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:content>
+            <VBox class="sapUiResponsiveContentPadding">
+                <!-- Row 1: Company Information (full width) -->
+                <Panel headerText="{i18n>companyInfo}" class="sapUiSmallMarginBottom vendorCard">
+                    <form:SimpleForm
+                        editable="false"
+                        layout="ResponsiveGridLayout"
+                        labelSpanXL="3" labelSpanL="3" labelSpanM="4" labelSpanS="12"
+                        emptySpanXL="0" emptySpanL="0" emptySpanM="0"
+                        columnsXL="2" columnsL="2" columnsM="1">
+                        <form:content>
+                            <Label text="{i18n>companyName}" />
+                            <Text text="{detail>/company_name}" wrapping="true" />
 
-                                    <Label text="{i18n>companyType}" design="Bold" />
-                                    <Text text="{detail>/company_type}" wrapping="true" />
+                            <Label text="{i18n>companyType}" />
+                            <Text text="{detail>/company_type}" wrapping="true" />
 
-                                    <Label text="{i18n>companyAddress}" design="Bold" />
-                                    <Text text="{detail>/company_address}" wrapping="true" />
-                                </form:content>
-                            </form:SimpleForm>
-                        </uxap:blocks>
-                    </uxap:ObjectPageSubSection>
-                </uxap:subSections>
-            </uxap:ObjectPageSection>
+                            <Label text="{i18n>companyAddress}" />
+                            <Text text="{detail>/company_address}" wrapping="true" />
+                        </form:content>
+                    </form:SimpleForm>
+                </Panel>
 
-            <uxap:ObjectPageSection title="{i18n>contactInfo}">
-                <uxap:subSections>
-                    <uxap:ObjectPageSubSection>
-                        <uxap:blocks>
-                            <form:SimpleForm
-                                editable="false"
-                                layout="ResponsiveGridLayout"
-                                labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
-                                emptySpanXL="0" emptySpanL="0" emptySpanM="0"
-                                columnsXL="2" columnsL="2" columnsM="1">
-                                <form:content>
-                                    <Label text="{i18n>contactPersonName}" design="Bold" />
-                                    <Text text="{detail>/contact_person_name}" wrapping="true" />
+                <!-- Row 2: Contact Information (two columns) -->
+                <l:Grid defaultSpan="XL6 L6 M6 S12" class="sapUiSmallMarginBottom">
+                    <Panel headerText="{i18n>contactPerson}" class="vendorCard">
+                        <form:SimpleForm
+                            editable="false"
+                            layout="ResponsiveGridLayout"
+                            labelSpanXL="5" labelSpanL="5" labelSpanM="5" labelSpanS="12"
+                            emptySpanXL="0" emptySpanL="0" emptySpanM="0"
+                            columnsXL="1" columnsL="1" columnsM="1">
+                            <form:content>
+                                <Label text="{i18n>contactPersonName}" />
+                                <Text text="{detail>/contact_person_name}" wrapping="true" />
 
-                                    <Label text="{i18n>contactPersonEmail}" design="Bold" />
-                                    <Text text="{detail>/contact_person_email}" wrapping="true" />
+                                <Label text="{i18n>companyAddress}" />
+                                <Text text="{detail>/company_address}" wrapping="true" />
+                            </form:content>
+                        </form:SimpleForm>
+                    </Panel>
+                    <Panel headerText="{i18n>contactInfo}" class="vendorCard">
+                        <form:SimpleForm
+                            editable="false"
+                            layout="ResponsiveGridLayout"
+                            labelSpanXL="5" labelSpanL="5" labelSpanM="5" labelSpanS="12"
+                            emptySpanXL="0" emptySpanL="0" emptySpanM="0"
+                            columnsXL="1" columnsL="1" columnsM="1">
+                            <form:content>
+                                <Label text="{i18n>contactPersonEmail}" />
+                                <Text text="{detail>/contact_person_email}" wrapping="true" />
 
-                                    <Label text="{i18n>contactPersonNumber}" design="Bold" />
-                                    <Text text="{detail>/contact_person_number}" wrapping="true" />
-                                </form:content>
-                            </form:SimpleForm>
-                        </uxap:blocks>
-                    </uxap:ObjectPageSubSection>
-                </uxap:subSections>
-            </uxap:ObjectPageSection>
+                                <Label text="{i18n>contactPersonNumber}" />
+                                <Text text="{detail>/contact_person_number}" wrapping="true" />
+                            </form:content>
+                        </form:SimpleForm>
+                    </Panel>
+                </l:Grid>
 
-            <uxap:ObjectPageSection title="{i18n>businessDetails}">
-                <uxap:subSections>
-                    <uxap:ObjectPageSubSection>
-                        <uxap:blocks>
-                            <form:SimpleForm
-                                editable="false"
-                                layout="ResponsiveGridLayout"
-                                labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
-                                emptySpanXL="0" emptySpanL="0" emptySpanM="0"
-                                columnsXL="2" columnsL="2" columnsM="1">
-                                <form:content>
-                                    <Label text="{i18n>taxNumber}" design="Bold" />
-                                    <Text text="{detail>/tax_number}" wrapping="true" />
+                <!-- Row 3: Business Details + Approval Information -->
+                <l:Grid defaultSpan="XL6 L6 M6 S12">
+                    <Panel headerText="{i18n>businessDetails}" class="vendorCard">
+                        <form:SimpleForm
+                            editable="false"
+                            layout="ResponsiveGridLayout"
+                            labelSpanXL="5" labelSpanL="5" labelSpanM="5" labelSpanS="12"
+                            emptySpanXL="0" emptySpanL="0" emptySpanM="0"
+                            columnsXL="1" columnsL="1" columnsM="1">
+                            <form:content>
+                                <Label text="{i18n>taxNumber}" />
+                                <Text text="{detail>/tax_number}" wrapping="true" />
 
-                                    <Label text="{i18n>industry}" design="Bold" />
-                                    <Text text="{detail>/industry}" wrapping="true" />
+                                <Label text="{i18n>industry}" />
+                                <Text text="{detail>/industry}" wrapping="true" />
 
-                                    <Label text="{i18n>serviceOffering}" design="Bold" />
-                                    <Text text="{detail>/service_offering}" wrapping="true" />
+                                <Label text="{i18n>serviceOffering}" />
+                                <Text text="{detail>/service_offering}" wrapping="true" />
 
-                                    <Label text="{i18n>reference}" design="Bold" />
-                                    <Text text="{detail>/reference}" wrapping="true" />
-                                </form:content>
-                            </form:SimpleForm>
-                        </uxap:blocks>
-                    </uxap:ObjectPageSubSection>
-                </uxap:subSections>
-            </uxap:ObjectPageSection>
+                                <Label text="{i18n>reference}" />
+                                <Text text="{detail>/reference}" wrapping="true" />
+                            </form:content>
+                        </form:SimpleForm>
+                    </Panel>
+                    <Panel headerText="{i18n>approvalInfo}" class="vendorCard">
+                        <form:SimpleForm
+                            editable="false"
+                            layout="ResponsiveGridLayout"
+                            labelSpanXL="5" labelSpanL="5" labelSpanM="5" labelSpanS="12"
+                            emptySpanXL="0" emptySpanL="0" emptySpanM="0"
+                            columnsXL="1" columnsL="1" columnsM="1">
+                            <form:content>
+                                <Label text="{i18n>approvedBy}" />
+                                <Text text="{detail>/approvedBy}" wrapping="true" />
 
-            <uxap:ObjectPageSection title="{i18n>approvalInfo}" visible="{= ${detail>/bpaProcessed} === true}">
-                <uxap:subSections>
-                    <uxap:ObjectPageSubSection>
-                        <uxap:blocks>
-                            <form:SimpleForm
-                                editable="false"
-                                layout="ResponsiveGridLayout"
-                                labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
-                                emptySpanXL="0" emptySpanL="0" emptySpanM="0"
-                                columnsXL="2" columnsL="2" columnsM="1">
-                                <form:content>
-                                    <Label text="{i18n>approvalStatus}" design="Bold" />
-                                    <ObjectStatus
-                                        text="{detail>/_displayStatus}"
-                                        state="{= ${detail>/_displayStatus} === 'Approved' ? 'Success' : ${detail>/_displayStatus} === 'Rejected' ? 'Error' : 'Warning'}"
-                                        icon="{= ${detail>/_displayStatus} === 'Approved' ? 'sap-icon://accept' : ${detail>/_displayStatus} === 'Rejected' ? 'sap-icon://decline' : 'sap-icon://pending'}" />
+                                <Label text="{i18n>approvedAt}" />
+                                <Text text="{detail>/approvedAt}" wrapping="true" />
 
-                                    <Label text="{i18n>approvedBy}" design="Bold" />
-                                    <Text text="{detail>/approvedBy}" wrapping="true" />
-
-                                    <Label text="{i18n>approvedAt}" design="Bold" />
-                                    <Text text="{detail>/approvedAt}" wrapping="true" />
-
-                                    <Label text="{i18n>approverComments}" design="Bold" />
-                                    <Text text="{detail>/comments}" wrapping="true" />
-                                </form:content>
-                            </form:SimpleForm>
-                        </uxap:blocks>
-                    </uxap:ObjectPageSubSection>
-                </uxap:subSections>
-            </uxap:ObjectPageSection>
-        </uxap:sections>
-    </uxap:ObjectPageLayout>
+                                <Label text="{i18n>approverComments}" />
+                                <Text text="{detail>/comments}" wrapping="true" />
+                            </form:content>
+                        </form:SimpleForm>
+                    </Panel>
+                </l:Grid>
+            </VBox>
+        </f:content>
+    </f:DynamicPage>
 </mvc:View>

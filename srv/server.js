@@ -25,7 +25,7 @@ cds.on("bootstrap", (app) => {
             status: status,
             bpaProcessed: true,
             approvedBy: approvedBy || null,
-            approvedAt: approvedAt || null,
+            approvedAt: new Date().toLocaleString("en-AU", { dateStyle: "medium", timeStyle: "short" }),
             comments: comments || null,
           })
           .where({ ID: vendorId })

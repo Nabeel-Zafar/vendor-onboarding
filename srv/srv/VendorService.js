@@ -14,37 +14,39 @@ module.exports = (srv) => {
 
   srv.before("CREATE", Vendor, async (req) => {
     const data = req.data;
+    const errors = [];
 
-    // Validation for company_name: Mandatory
+    // Mandatory field validations
     if (!data.company_name || typeof data.company_name !== "string" || !data.company_name.trim()) {
-      req.error(400, "Company Name is mandatory");
+      errors.push("Company Name is mandatory");
     }
-
-    // Validation for contact_person_name: Mandatory
     if (!data.contact_person_name || typeof data.contact_person_name !== "string" || !data.contact_person_name.trim()) {
-      req.error(400, "Contact Person Name is mandatory");
+      errors.push("Contact Person Name is mandatory");
     }
-
-    // Validation for contact_person_email: Mandatory email
     if (!data.contact_person_email || typeof data.contact_person_email !== "string" || !isValidEmail(data.contact_person_email)) {
-      req.error(400, "Contact Person Email must be a valid email");
+      errors.push("Contact Person Email must be a valid email");
     }
-
-    // Validation for contact_person_number: Mandatory and must be a number
     if (!data.contact_person_number || isNaN(data.contact_person_number)) {
-      req.error(400, "Contact Person Number must be a number");
+      errors.push("Contact Person Number must be a number");
     }
 
-    // Duplicate email check
-    const existingEmail = await SELECT.from(Vendor).where({ contact_person_email: data.contact_person_email });
-    if (existingEmail && existingEmail.length > 0) {
-      req.error(409, "A vendor with this email already exists");
+    // Duplicate checks (only if format validations passed for those fields)
+    if (errors.length === 0) {
+      const [existingEmail, existingPhone] = await Promise.all([
+        SELECT.from(Vendor).where({ contact_person_email: data.contact_person_email }),
+        SELECT.from(Vendor).where({ contact_person_number: data.contact_person_number })
+      ]);
+
+      if (existingEmail && existingEmail.length > 0) {
+        errors.push("A vendor with this email already exists");
+      }
+      if (existingPhone && existingPhone.length > 0) {
+        errors.push("A vendor with this phone number already exists");
+      }
     }
 
-    // Duplicate phone number check
-    const existingPhone = await SELECT.from(Vendor).where({ contact_person_number: data.contact_person_number });
-    if (existingPhone && existingPhone.length > 0) {
-      req.error(409, "A vendor with this phone number already exists");
+    if (errors.length > 0) {
+      req.reject(409, errors.join(". "));
     }
   });
 
@@ -135,16 +137,20 @@ module.exports = (srv) => {
    });
 
   srv.on("ApproveOrRejectAction", async (req) => {
-    const { vendorId, status } = req.data.input;
-    // Use cds.transaction to perform the update operation
+    const { vendorId, status, approvedBy, comments } = req.data.input;
     await cds.transaction(async (tx) => {
-        const affectedRows = await tx.run(
+        await tx.run(
             UPDATE(Vendor)
-                .set({ status: status })
+                .set({
+                    status: status,
+                    approvedBy: approvedBy || "",
+                    approvedAt: new Date().toLocaleString("en-AU", { dateStyle: "medium", timeStyle: "short" }),
+                    comments: comments || "",
+                    bpaProcessed: true
+                })
                 .where({ ID: vendorId })
         );
     });
-    // Return the result of the operation
     return { result: `Vendor with ID ${vendorId} status updated to ${status}` };
 });
 
